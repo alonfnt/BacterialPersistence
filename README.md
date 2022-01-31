@@ -1,1 +1,1 @@
-# bacterial_persistence
+# BacterialPersistence
