@@ -11,13 +11,14 @@ from model_equations import initialise_system, evolve_system
 # np.random.seed(2)
 saving = True				# saving data
 
-model = 1				# models: 1 (triggered), 2 (spontaneous, one lag time), 3 (spontaneous, two lag times)
+model = 1                   # models: 1 (triggered), 2 (spontaneous, one lag time), 3 (spontaneous, two lag times)
 mutation = True
 extinction = False
-mutation_seed = 'min'			# seeds: min , max, optimal parameters
-tot_cycles = 10_000           		# total number of cycles / lenght of evolution
+mutation_seed = 'min'		# seeds: min , max, optimal parameters
+tot_cycles = 10_000 		# total number of cycles / lenght of evolution
 
 data_path = "model_" + str(model) + "/case_" + case + "/data/seed_" + mut_seed
+
 
 
 ###########################
