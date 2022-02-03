@@ -7,7 +7,7 @@ from functions import optimal_lag, analytical_fitness
 # setting antibiotic parameters
 T0 = 0							# application time
 Tab = 6							# duration
-p_range = np.array([0.9, 0.9]) 	# probability of ab application, in percentage
+p_range = np.array([0.2, 0.3, 0.6, 0.9]) 	# probability of ab application, in percentage
 save_fig = True
 
 
@@ -15,12 +15,12 @@ save_fig = True
 ## Importing data and setting plotting parameters ##
 ####################################################
 # importing data
-tot_cycles = 20000
+tot_cycles = 20_000
 data = []
 for p in p_range:
-	prob = str(int(100*p))
-	data.append(np.loadtxt("../../../data/part1/model1/consumption_fraction-p"+prob+"-T"+str(Tab)+"-T0"+str(T0)))
-    #data.append(np.loadtxt("data/constant/cycles_"+str(tot_cycles)+"/consumption_fraction-p"+prob+"-T"+str(Tab+T0))
+    prob = str(int(100*p))
+    # data.append(np.loadtxt("../../../data/model1/consumption_fraction-p"+prob+"-T"+str(Tab)+"-T0"+str(T0)))
+    data.append(np.loadtxt("../../../data/model1/cycles_"+str(tot_cycles)+"/consumption_fraction-p"+prob+"-T"+str(Tab)+"-T0"+str(T0)))
 
 
 # setting plotting parameters
@@ -44,6 +44,7 @@ ax[1].grid(False)
 ax[0].set(ylabel=r"$F({\lambda}^*) - F({\lambda})$")
 ax[1].set(xlabel=r"$\lambda$ [h]", ylabel="Consumption fraction")
 
+
 # Ax 1: plotting analytical fitness
 lag_arr = np.linspace(0, Tab, 1000) + 10**(-4)
 
@@ -51,7 +52,6 @@ i = 0
 for p in p_range:
     ab_args = [p, T0, Tab]
     lag_opt, F_opt = optimal_lag(ab_args, 0.1)
-    print(lag_opt)
     F_arr = analytical_fitness(lag_arr, ab_args)
     F_arr[lag_arr == lag_opt] += 10**(2)
 
@@ -77,6 +77,6 @@ fig.legend(ax, labels=labels, bbox_to_anchor=[0.98, 0.7], borderaxespad=0.2)
 # fig.subplots_adjust(right=0.85)
 fig.show()
 if save_fig:
-	fig.savefig("../../../figs/part1/model1/constant/exp_num_com.png", dpi=100)
+	fig.savefig("../../../figures/model1/comparing_numerical_analytical_fitness.png", dpi=100)
 
 

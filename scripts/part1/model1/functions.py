@@ -66,7 +66,7 @@ def optimal_lag(ab_args, resolution=0.1):
     T = T0 + Tab
     lag = np.arange(0, T, resolution) + 10**(-4)
 
-    F = analytical_fitness(lag, ab_args)		# computing analytical fitness
+    F = analytical_fitness(lag, ab_args)			# computing analytical fitness
     lag_opt = lag[F == F.max()][0]		        # identifying lag time corresponding to max fitness
 
     return lag_opt, F.max()
@@ -159,7 +159,7 @@ fs_text = 14
 
 # plotting behavior of system, both with ode and analytical
 # Not working
-def plot_cycles(lag, p, r_arr, T_ab, extinction, savefig=False):
+def plot_cycles(lag, p, r_arr, Tab, extinction, savefig=False):
     tot_cycles = len(r_arr)
     # integration
     d0 = np.array([n0, n0])
@@ -183,9 +183,9 @@ def plot_cycles(lag, p, r_arr, T_ab, extinction, savefig=False):
         n1_a.append(n_ana[0])
         n2_a.append(n_ana[1])
 
-        args = (d0, lag, p, r_arr[ic], T_ab, extinction)
+        args = (d0, lag, p, r_arr[ic], Tab, extinction)
         sol_cycle = solve_ivp(constant_rate_ode, t_span, g0, args=args, max_step=0.1)
-        n_ana, n_T_ana, t_ana = analytical_cycle(n_ana, lag, p, r_arr[ic], T_ab, extinction)
+        n_ana, n_T_ana, t_ana = analytical_cycle(n_ana, lag, p, r_arr[ic], Tab, extinction)
 
         # saving data
         time.append(sol_cycle.t + ic * T_cycle)
@@ -197,7 +197,7 @@ def plot_cycles(lag, p, r_arr, T_ab, extinction, savefig=False):
 
         t_S[:, ic] = min(sol_cycle.t[sol_cycle.y[2] <= 0]), t_ana
 
-        time_ana.append(T_ab * (r_arr[ic] < p) + ic * T_cycle)
+        time_ana.append(Tab * (r_arr[ic] < p) + ic * T_cycle)
         time_ana.append(t_ana + ic * T_cycle)
         time_ana.append((1+ic) * T_cycle)
         n1_a.append(n_T_ana[0])
@@ -218,7 +218,7 @@ def plot_cycles(lag, p, r_arr, T_ab, extinction, savefig=False):
 
     fig, ax = plt.subplots(2, 1, figsize=(8, 3.5), sharex="all", sharey="all")
     fig.suptitle("p = " + str(np.round(p, 2)) + ", lag1 = " + str(np.round(lag[0], 1)) + ", lag2 = " + str(
-        np.round(lag[1], 1)) + ", T = " + str(T_ab))
+        np.round(lag[1], 1)) + ", T = " + str(Tab))
 
     ax[0].plot(time, S, alpha=0.4, label="substrate")
     ax[1].plot(time, S, alpha=0.4, label="substrate")
@@ -243,6 +243,6 @@ def plot_cycles(lag, p, r_arr, T_ab, extinction, savefig=False):
     fig.tight_layout()
     fig.show()
     if savefig:
-        fig.savefig("../../../fig/part1/model1/single_sample.png", dpi=100)
+        fig.savefig("../../../fig/model1/single_sample.png", dpi=100)
 
     return np.array([[d1, d2], [g1, g2]]), t_S, S
