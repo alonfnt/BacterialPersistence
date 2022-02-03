@@ -157,7 +157,7 @@ def plot_single_sample(bac_args, ab_args, sim_args, r_arr, winner=True, compare=
     #fig.tight_layout()
     fig.show()
     if save_fig:
-        fig.savefig("figs/ode_exp.png", dpi=100)
+        fig.savefig("../../../figures/model2/ode_example.png", dpi=100)
 
 
 
@@ -175,10 +175,10 @@ def extinction_frequency(ab_args, indices, save_fig=False):
         w_params = '(' + str(np.round(lag_opt[ip+1, it], 2)) + ', ' + str(np.round(del_opt[ip+1, it], 2)) + ')'
         # w_params = '(' + str(int(p * (T0 + Tab))) + ', 0)'
 
-    p_ext_winner = np.loadtxt("data/competition_opt/winner_extinction_prob-p" + str(p) + "-T0" + str(np.round(T0,0)) + "-Tab" + str(Tab))
-    p_ext_competitor = np.loadtxt("data/competition_opt/competitor_extinction_prob-p" + str(p) + "-T0" + str(np.round(T0,0)) + "-Tab" + str(Tab))
-    lag_opt = np.loadtxt('data/competition_opt/comp_lag-T0'+str(T0))
-    del_opt = np.loadtxt('data/competition_opt/comp_delta-T0'+str(T0))
+    p_ext_winner = np.loadtxt("../../../data/model2/optimal_extinction_prob-p" + str(p) + "-T0" + str(np.round(T0,0)) + "-Tab" + str(Tab))
+    p_ext_competitor = np.loadtxt("../../../data/model2/competitor_extinction_prob-p" + str(p) + "-T0" + str(np.round(T0,0)) + "-Tab" + str(Tab))
+    lag_opt = np.loadtxt('../../../data/model2/comp_lag-T0'+str(T0))
+    del_opt = np.loadtxt('../../../data/model2/comp_delta-T0'+str(T0))
     optimal_comp = '(' + str(np.round(lag_opt[ip, it], 2)) + ', ' + str(np.round(del_opt[ip, it], 2)) + ')'
     # optimal_comp = '(?, ?)'
 
@@ -200,7 +200,7 @@ def extinction_frequency(ab_args, indices, save_fig=False):
     fig.colorbar(im, ax=ax[0:2])
     fig.show()
     if save_fig:
-        fig.savefig("figs/extinction_frequency_p" + ab_label[0] + "_T0" + ab_label[1] + "_T" + ab_label[2] + ".png", dpi=100)
+        fig.savefig("../../../figuers/model2/extinction_frequency_p" + ab_label[0] + "_T0" + ab_label[1] + "_T" + ab_label[2] + ".png", dpi=100)
 
     fig, ax = plt.subplots(1, 2, figsize=(12, 5), sharey=True)
     # ax[0].plot(np.linspace(0, T0 + 12, 100), p_ext_winner[0], '.-', label=r'winner, $\delta$ = ' + str(0.1*0))

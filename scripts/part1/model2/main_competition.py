@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import time
 
@@ -7,28 +8,36 @@ from simulation_functions import run_competition_in_parallel
 
 np.random.seed(18)
 
+font = {'family': 'Times New Roman',
+        'weight': 'normal',
+        'size': 20}
+mpl.rc('font', **font)
+
+lag_cmap = mpl.cm.get_cmap('viridis')
+del_cmap = mpl.cm.get_cmap('plasma')
+
 
 ###########################
 ## Simulation parameters ##
 ###########################
-bac_res = 20 #101                           # resolution in bacterial parameters
-ab_res = 20 #100                            # resolution in antibiotic parameters
-t_res = 16                              # resolution in time array
+bac_res = 101                           # resolution in bacterial parameters
+ab_res = 100                            # resolution in antibiotic parameters
+t_res = 16                                  # resolution in time array
 tot_cycles = 20
-repetitions = 1                         # number of repetitions for ensemble average
+repetitions = 1                             # number of repetitions for ensemble average
 
-threshold = False                       # extinction threshold on population
-save_fig = False
+data = 'old'                                # 'new' - generate and plot new data. 'old' plot old data
+save_fig = True
 save_data = False
-data = 'new'                                    # 'new' - generate and plot new data. 'old' plot old data
+
 
 
 ###########################
 ## Antibiotic parameters ##
 ###########################
 # for chosing which time parameter to keep constant.
-ic = 0                                          # ic = 0 corresponds to constant T0, ic = 1 corresponds to constant Tab
-T_const = 5                                     # value of the constant parameter
+ic = 1                                          # ic = 0 corresponds to constant T0, ic = 1 corresponds to constant Tab
+T_const = 8                                     # value of the constant parameter
 
 # defining parameter arrays
 T_max = [12, 24]                                # upper bounds on meningful values for T0 and Tab
@@ -64,40 +73,39 @@ ap, bp = ap_bp(lag, delta)
 ## Running Simulation ##
 ########################
 if data == 'new':
+    tic = time.time()
     bac_args = [lag, delta, a, b, ap, bp]
     ab_args = [p_arr, T0, Tab]
     sim_args = [ab_res, bac_res, t_res, tot_cycles, repetitions, save_data]
 
-    tic = time.time()
     if __name__ == '__main__':
         S_frac, lag_opt, del_opt = run_competition_in_parallel(bac_args, ab_args, sim_args)
 
-    toc = time.time()
-    print(f'\nTime: {(toc - tic) / 3600}h\n')
-
     # saving
     if save_data:
-        np.savetxt("data/competition_opt/ext_comp_Sfrac-"+T_labels[ic]+str(T_const), S_frac)
-        np.savetxt("data/competition_opt/ext_comp_lag-"+T_labels[ic]+str(T_const), lag_opt)
-        np.savetxt("data/competition_opt/ext_comp_delta-"+T_labels[ic]+str(T_const), del_opt)
+        np.savetxt("../../../data/model2/competition_Sfrac-"+T_labels[ic]+str(T_const), S_frac)
+        np.savetxt("../../../data/model2/competition_lag-"+T_labels[ic]+str(T_const), lag_opt)
+        np.savetxt("../../../data/model2/competition_delta-"+T_labels[ic]+str(T_const), del_opt)
 
+    toc = time.time()
+    print(f'\nTime: {(toc - tic) / 3600}h\n')
 
 
 ###################
 ## Plotting data ##
 ###################
 if data == 'old':
-    S_frac = np.loadtxt(path+'comp_Sfrac-'+severity+'-'+T_labels[ic]+str(T_const))
-    lag_opt = np.loadtxt(path+'comp_lag-'+severity+'-'+T_labels[ic]+str(T_const))
-    del_opt = np.loadtxt(path+'comp_delta-'+severity+'-'+T_labels[ic]+str(T_const))
+    S_frac = np.loadtxt('../../../data/model2/competition_Sfrac-'+T_labels[ic]+str(T_const))[:,:-1]
+    lag_opt = np.loadtxt('../../../data/model2/competition_lag-'+T_labels[ic]+str(T_const))[:,:-1]
+    del_opt = np.loadtxt('../../../data/model2/competition_delta-'+T_labels[ic]+str(T_const))[:,:-1]
 
 
-T = np.outer(np.ones_like(T0), T0) + np.outer(np.ones_like(Tab), Tab)
+T = np.outer(np.ones(ab_res), T0) + np.outer(np.ones(ab_res), Tab)
 T[0, 0] = 1
 time_labels = [r'$T_0$', r'$T_{AB}$']
 title = time_labels[ic] + ' = ' + str(T_const)
 
-fig, ax = plt.subplots(1, 3, figsize=(15, 4), sharey=True)
+fig, ax = plt.subplots(1, 2, figsize=(15, 5.5), sharey=True)
 # fig.suptitle(title)
 
 # plotting lag time
@@ -113,13 +121,14 @@ cbar = fig.colorbar(im1, ax=ax[1], aspect=20, anchor=(-.1, 0.5))
 cbar.set_label(r"$\delta^* [h^{-1}]$", rotation=0, labelpad=50)
 
 # ax[2].set(xlabel=time_labels[1-ic] + r'$~[h]$', ylabel=r"$p$")#, title="Consumption fraction")
-im2 = ax[2].imshow(S_frac, origin="lower", aspect="auto", extent=[0, max(T_arr), 0, 1])
-cbar = fig.colorbar(im2, ax=ax[2], aspect=20, anchor=(-.1, 0.5))
-cbar.set_label("Consumption fraction", rotation=0, labelpad=50)
+# im2 = ax[2].imshow(S_frac, origin="lower", aspect="auto", extent=[0, max(T_arr), 0, 1])
+# cbar = fig.colorbar(im2, ax=ax[2], aspect=20, anchor=(-.1, 0.5))
+# cbar.set_label("Consumption fraction", rotation=0, labelpad=50)
 
 fig.tight_layout()
 fig.show()
 
 if save_fig:
-    fig.savefig("opt_competitor-"+T_labels[ic]+str(T_const)+"totc30_reps50.png", dpi=100)
+    fig.savefig("../../../figures/model2/competitor_parameters-"+T_labels[ic]+str(T_const)+".png", dpi=100)
 
+3

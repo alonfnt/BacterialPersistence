@@ -18,14 +18,14 @@ del_cmap = mpl.cm.get_cmap('plasma')
 ###########################
 ## Simulation parameters ##
 ###########################
-save_fig = True
-save_data = True
+save_fig = False
+save_data = False
 data = 'new'                                    # 'new' - generate and plot new data. 'old' plot old data
 resolution = 'low'                              # resolution of antibiotic parameters. 'low' or 'high'
 
-if resolution == 'low': ab_res = 20# 101               # for generating data used in competition simulations
+if resolution == 'low': ab_res = 101               # for generating data used in competition simulations
 elif resolution == 'high': ab_res = 400            # for creating high resolution plots
-bac_res = 20 # 400                                   # resolution in bacterial parameters
+bac_res = 400                                   # resolution in bacterial parameters
 
 
 

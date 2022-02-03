@@ -106,9 +106,9 @@ def Ts_approximation(t, n_t0, a, b):
         idx = np.where(np.diff(np.sign(S), axis=0) < 0)             # identify indices where S changes sign
         idx_sorted = np.lexsort((idx[2], idx[1]))                   # sorting indices
 
-        t_lowlim = t[idx[0]]                                        # indentifying corresponding time
-        t_lowlim = t_lowlim[idx_sorted].reshape(form) + t_rand      # adding offset
-        t_rand = t_lowlim                                           # updating offset
+        Ts_lowlim = t[idx[0]]                                        # indentifying corresponding time
+        Ts_lowlim = Ts_lowlim[idx_sorted].reshape(form) + t_rand      # adding offset
+        t_rand = Ts_lowlim                                           # updating offset
 
         # Preparing for next round
         t = np.linspace(0, dt_new, t_steps)                         # new time array
@@ -136,12 +136,12 @@ def optimal_parameters_from_data(bac_args, ab_args):
 
     lag, delta, a, b, ap, bp = bac_args
     p, T0, Tab = ab_args
-    ab_res = len(np.loadtxt("data/single_opt/single_lag-T0" + str(int(T0))))
+    ab_res = len(np.loadtxt("../../../data/model2/low_resolution/optimal_lag-T0" + str(int(T0))))
     ip = int(p * (ab_res-1))
     it = int(Tab * (ab_res-1) / 24)
 
-    lag[0] = np.loadtxt("../../../data/model2/single_lag-T0" + str(int(T0)))[ip, it]
-    delta[0] = np.loadtxt("../../../data/model2/single_opt/single_delta-T0" + str(int(T0)))[ip, it]
+    lag[0] = np.loadtxt("../../../data/model2/low_resolution/optimal_lag-T0" + str(int(T0)))[ip, it]
+    delta[0] = np.loadtxt("../../../data/model2/low_resolution/optimal_delta-T0" + str(int(T0)))[ip, it]
 
     # Transforming to a-b scheme
     a[0], b[0] = a_b(lag[0], delta[0])
@@ -155,7 +155,7 @@ def run_competition(bac_args, ab_args, sim_args):
     # Sorting inputs
     lag, delta, a, b, ap, bp = bac_args
     p, T0, Tab = ab_args[0:3]
-    _, bac_res, t_res, tot_cycles, reps = sim_args
+    _, bac_res, t_res, tot_cycles, reps, _ = sim_args
 
     t_min, t_max = 12 - T0, 15 + (T0 + Tab)                     # time limits
     t_arr = np.linspace(t_min, t_max, t_res)                    # time array
@@ -176,7 +176,7 @@ def run_competition(bac_args, ab_args, sim_args):
             # With antibiotics
             if r_arr[ic] < p:
                 n_T0 = analytical_growth(T0, n_0, a, b)             # population before AB
-                n_T = analytical_death(Tab, n_T0, a, b, ap, bp)     # population after AB
+                n_T = analytical_decay(Tab, n_T0, a, b, ap, bp)     # population after AB
                 d_dead = n_T[0] < n_min                             # checking if dormant species is killed by AB
                 g_dead = n_T[1] < n_min                             # checking if growing species is killed by AB
                 p_extinct[d_dead * g_dead * (extinct == 0)] += 1    # counting number of species that went extinct
@@ -184,14 +184,14 @@ def run_competition(bac_args, ab_args, sim_args):
                 for i in range(2):
                     extinct[d_dead[i] * g_dead[i]] = 1              # updating counter of first extinction
 
-                t = find_ts(t_arr, n_T, a, b)                       # computing ts: S(ts) = 0
+                t = Ts_approximation(t_arr, n_T, a, b)              # computing ts: S(ts) = 0
                 n_t = analytical_growth(t, n_T, a, b)               # population at ts
                 # S_frac_cycle[ic] += (n_t[1] - n_T[1] + n_T0[1]) / ((S0 - n_t[2]) * reps)
                 S_frac_cycle[ic] += (n_t[1] - n_T[1] + n_T0[1]) * ext / (S0 * reps) + (S0 - n_t[1] + n_T[1] - n_T0[1]) * ext * extinct / (S0 * reps)
 
             # Without antibiotics
             else:
-                t = find_ts(t_arr, n_0, a, b)                       # computing ts: S(ts) = 0
+                t = Ts_approximation(t_arr, n_0, a, b)              # computing ts: S(ts) = 0
                 n_t = analytical_growth(t, n_0, a, b)               # population at ts
                 # S_frac_cycle[ic] += n_t[1] / ((S0 - n_t[2]) * reps)
                 S_frac_cycle[ic] += n_t[1] * ext / (S0 * reps) + (S0 - n_t[1]) * ext * extinct / (S0 * reps)
@@ -239,9 +239,9 @@ def looping_through_antibiotic_parameters(bac_args, ab_args, sim_args):
             # Without extinction
             opt_params[ip, it], prob_ext = run_competition(bac_args, ab_args, sim_args)[0:2]
             if save_data:
-                config = str(p.round(1)) + "-T0" + str(T0[it].round(0)) + "-Tab" + str(Tab[it].round(0))
-                np.savetxt("data/winner_extinction_prob-p" + config, prob_ext[0])
-                np.savetxt("data/competitor_extinction_prob-p" + config, prob_ext[1])
+                config = str(int(10*p)*10) + "-T0" + str(int(T0[it])) + "-Tab" + str(int(Tab[it]))
+                np.savetxt("../../../data/model2/extinction_frequency/optimal_extinction_prob-p" + config, prob_ext[0])
+                np.savetxt("../../../data/model2/extinction_frequency/competitor_extinction_prob-p" + config, prob_ext[1])
 
             if it % 10 == 0 and 100 * p % 10 == 0:
                 print(100 * np.round((it + 10) / ab_res, 2), "% of p = " + str(np.round(p, 2)))  # print progression
