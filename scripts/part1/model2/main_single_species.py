@@ -18,14 +18,14 @@ del_cmap = mpl.cm.get_cmap('plasma')
 ###########################
 ## Simulation parameters ##
 ###########################
-save_fig = False
+save_fig = True
 save_data = True
 data = 'new'                                    # 'new' - generate and plot new data. 'old' plot old data
 resolution = 'low'                              # resolution of antibiotic parameters. 'low' or 'high'
 
-if resolution == 'low': ab_res = 101               # for generating data used in competition simulations
+if resolution == 'low': ab_res = 20# 101               # for generating data used in competition simulations
 elif resolution == 'high': ab_res = 400            # for creating high resolution plots
-bac_res = 400                                   # resolution in bacterial parameters
+bac_res = 20 # 400                                   # resolution in bacterial parameters
 
 
 
@@ -33,7 +33,7 @@ bac_res = 400                                   # resolution in bacterial parame
 ## Antibiotic parameters ##
 ###########################
 # for chosing which time parameter to keep constant.
-ic = 0                                          # ic = 0 corresponds to constant T0, ic = 1 corresponds to constant Tab
+ic = 1                                          # ic = 0 corresponds to constant T0, ic = 1 corresponds to constant Tab
 T_const = 5                                     # value of the constant parameter
 
 # defining parameter arrays
@@ -75,9 +75,9 @@ if data == 'new':
 
     # saving
     if save_data:
-        np.savetxt("../../../data/part1/model2/single_lag-"+T_labels[ic]+str(T_const), lag_opt)
-        np.savetxt("../../../data/part1/model2/single_delta-"+T_labels[ic]+str(T_const), del_opt)
-        np.savetxt("../../../data/part1/model2/single_fitness-"+T_labels[ic]+str(T_const), fitness)
+        np.savetxt("../../../data/model2/"+resolution+"_resolution/optimal_lag-"+T_labels[ic]+str(T_const), lag_opt)
+        np.savetxt("../../../data/model2/"+resolution+"_resolution/optimal_delta-"+T_labels[ic]+str(T_const), del_opt)
+        np.savetxt("../../../data/model2/"+resolution+"_resolution/optimal_fitness-"+T_labels[ic]+str(T_const), fitness)
 
 
 ###################
@@ -85,9 +85,9 @@ if data == 'new':
 ###################
 # importing data 
 if data == 'old':
-    lag_opt = np.loadtxt('../../../data/part1/model2/single_lag-' + T_labels[ic]+str(T_const))
-    del_opt = np.loadtxt('../../../data/part1/model2/single_delta-' + T_labels[ic]+str(T_const))
-    fitness = np.loadtxt('../../../data/part1/model2/single_fitness-' + T_labels[ic]+str(T_const))
+    lag_opt = np.loadtxt('../../../data/model2/"+resolution+"_resolution/optimal_lag-' + T_labels[ic]+str(T_const))
+    del_opt = np.loadtxt('../../../data/model2/"+resolution+"_resolution/optimal_delta-' + T_labels[ic]+str(T_const))
+    fitness = np.loadtxt('../../../data/model2/"+resolution+"_resolution/optimal_fitness-' + T_labels[ic]+str(T_const))
 
 # arrays for scaling imshow
 T = np.outer(np.ones_like(Tab), Tab) + np.outer(np.ones_like(T0), T0)
@@ -124,6 +124,7 @@ cbar.set_label(r"$\delta^* [h^{-1}]$", rotation=0, labelpad=50)
 # saving
 fig.tight_layout()
 fig.show()
+
 if save_fig:
-    fig.savefig("../../../fig/part1/model2/single_heatmap-"+T_labels[ic]+str(T_const)+".png", dpi=100)
+    fig.savefig("../../../figures/model2/optimal_parameters_heatmap-"+T_labels[ic]+str(T_const)+".png", dpi=100)
 

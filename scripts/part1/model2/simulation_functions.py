@@ -6,9 +6,6 @@ from model_equations import a_b, ap_bp
 from model_equations import analytical_population, analytical_growth, analytical_decay
 from model_equations import n0, S0, f, n_min
 
-from datetime import date
-folder = "competition_opt/"
-path = folder #+ date.today().strftime("%d-%m")
 
 
 ####################
@@ -143,8 +140,8 @@ def optimal_parameters_from_data(bac_args, ab_args):
     ip = int(p * (ab_res-1))
     it = int(Tab * (ab_res-1) / 24)
 
-    lag[0] = np.loadtxt("../../..data/single_opt/single_lag-T0" + str(int(T0)))[ip, it]
-    delta[0] = np.loadtxt("../data/single_opt/single_delta-T0" + str(int(T0)))[ip, it]
+    lag[0] = np.loadtxt("../../../data/model2/single_lag-T0" + str(int(T0)))[ip, it]
+    delta[0] = np.loadtxt("../../../data/model2/single_opt/single_delta-T0" + str(int(T0)))[ip, it]
 
     # Transforming to a-b scheme
     a[0], b[0] = a_b(lag[0], delta[0])

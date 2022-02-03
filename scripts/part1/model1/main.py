@@ -19,7 +19,7 @@ save_data = False
 save_fig = False
 
 tot_cycles = 100    # total number of cycles
-dlag = 0.5			# space between lag times
+dlag = 0.1			# space between lag times
 reps = 1            # repetitions for ensemble average
 
 
