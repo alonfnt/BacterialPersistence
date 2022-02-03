@@ -126,5 +126,5 @@ fig.tight_layout()
 fig.show()
 
 if save_fig:
-    fig.savefig("../../../figures/model2/optimal_parameters_heatmap-"+T_labels[ic]+str(T_const)+".png", dpi=100)
+    fig.savefig("../../../figures/model2/optimal_parameters-"+T_labels[ic]+str(T_const)+".png", dpi=100)
 
