@@ -6,6 +6,8 @@ import numpy as np
 K = 10**9           # carrying capacity
 beta_max = 1        # max growth rate
 gamma = 1           # kill rate
+lag_min = 0.01      # lower limit on lag time
+delta_max = 0.1     # upper limit on delta
 
 
 #########################

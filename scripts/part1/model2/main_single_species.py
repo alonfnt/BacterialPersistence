@@ -3,7 +3,7 @@ import matplotlib as mpl
 import matplotlib.pyplot as plt
 import time
 
-from model_equations import a_b, ap_bp
+from model_equations import a_b, ap_bp, lag_min, delta_max
 from simulation_functions import compute_optimal_parameters
 
 font = {'family': 'Times New Roman',
@@ -23,9 +23,9 @@ save_data = True
 data = 'new'                                    # 'new' - generate and plot new data. 'old' plot old data
 resolution = 'low'                              # resolution of antibiotic parameters. 'low' or 'high'
 
-if resolution == 'low': ab_res = 20 #101               # for generating data used in competition simulations
+if resolution == 'low': ab_res = 101               # for generating data used in competition simulations
 elif resolution == 'high': ab_res = 400            # for creating high resolution plots
-bac_res = 20 # 400                                   # resolution in bacterial parameters
+bac_res = 400                                   # resolution in bacterial parameters
 
 
 
@@ -51,8 +51,8 @@ Tab = T_values[1-ic]
 ##########################
 ## Bacterial parameters ##
 ##########################
-lag_arr = np.linspace(0, T_const + T_arr.max() + 1, bac_res) + 0.01
-delta_arr = np.linspace(0, 0.1, bac_res)
+lag_arr = np.linspace(0, T_const + T_arr.max() + 1, bac_res) + lag_min
+delta_arr = np.linspace(0, delta_max, bac_res)
 
 lag = np.outer(np.ones(bac_res), lag_arr)
 delta = np.outer(delta_arr, np.ones(bac_res))
@@ -119,7 +119,7 @@ cbar.set_label(r"$\delta^* [h^{-1}]$", rotation=0, labelpad=50)
 # ax[2].set(xlabel=time_labels[1-ic] + r'$~[h]$', ylabel=r"$p$")#, title=r"$T_S$")
 # im2 = ax[2].imshow(fitness, origin="lower", aspect="auto", extent=[T_arr.min(), T_arr.max(), 0, 1])
 # cbar = fig.colorbar(im2, ax=ax[2], aspect=20, anchor=(-.1, 0.5))
-# cbar.set_label(r"¤\langle T_S \rangle_p^{-1} ~[h^{-1}]$", rotation=0, labelpad=50)
+# cbar.set_label(r"$\langle T_S \rangle_p^{-1} ~[h^{-1}]$", rotation=0, labelpad=50)
 
 # saving
 fig.tight_layout()
