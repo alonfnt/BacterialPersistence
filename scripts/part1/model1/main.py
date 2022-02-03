@@ -6,6 +6,7 @@ from tqdm import tqdm
 
 # importing from other files
 from functions import compete, plot_cycles
+from model_equations import lag_min
 
 # set some basic plotting parameters
 plt.rcParams['font.size'] = 12
@@ -14,12 +15,11 @@ plt.rcParams['font.size'] = 12
 ###########################
 ## Simulation parameters ##
 ###########################
-save_data = False
-save_fig = True
-extinction = False
+save_data = True
+save_fig = False
 
-tot_cycles = 20     # total number of cycles
-dlag = 1			# space between lag times
+tot_cycles = 100    # total number of cycles
+dlag = 0.1			# space between lag times
 reps = 1            # repetitions for ensemble average
 
 
@@ -35,6 +35,7 @@ ab_args = [p, T0, Tab]
 
 # array of lag times
 lag_arr = np.arange(0, T0 + Tab, dlag) + lag_min
+
 
 
 ################
@@ -56,8 +57,8 @@ for rep in range(reps):
     comp_frac += s_c / reps
 
 if save_data:
-    np.savetxt("../../../data/part1/model1/optimal_consumption_fraction-p"+prob+"-T"+str(Tab)+"-T0"+str(T0), optimal_comp_frac)
-    np.savetxt("../../../data/part1/model1/consumption_fraction-p"+prob+"-T"+str(Tab)+"-T0"+str(T0), comp_frac)
+    np.savetxt("../../../data/model1/optimal_consumption_fraction-p"+prob+"-T"+str(Tab)+"-T0"+str(T0), optimal_comp_frac)
+    np.savetxt("../../../data/model1/consumption_fraction-p"+prob+"-T"+str(Tab)+"-T0"+str(T0), comp_frac)
 
 
 ax.set(xlabel=r"$\lambda$ [h]", ylabel="Consumption fraction")
@@ -69,5 +70,5 @@ fig.tight_layout()
 fig.show()
 
 if save_fig:
-        fig.savefig("../../../data/part1/model1/consumption_fraction-p"+prob+"-T"+str(Tab)+"-T0"+str(T0)+".png")
+        fig.savefig("../../../figures/model1/consumption_fraction-p"+prob+"-T"+str(Tab)+"-T0"+str(T0)+".png")
 	

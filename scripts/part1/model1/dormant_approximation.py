@@ -25,4 +25,4 @@ ax.legend()
 
 fig.tight_layout()
 fig.show()
-fig.savefig("../../../figures/model1/dormant_approx.png", dpi=100)
+fig.savefig("../../../figures/model1/dormant_approximation.png", dpi=100)
