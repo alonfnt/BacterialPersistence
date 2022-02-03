@@ -243,6 +243,6 @@ def plot_cycles(lag, p, r_arr, T_ab, extinction, savefig=False):
     fig.tight_layout()
     fig.show()
     if savefig:
-        fig.savefig("figs/single_sample.png", dpi=100)
+        fig.savefig("../../../fig/part1/model1/single_sample.png", dpi=100)
 
     return np.array([[d1, d2], [g1, g2]]), t_S, S

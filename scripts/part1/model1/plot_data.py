@@ -19,7 +19,7 @@ tot_cycles = 20000
 data = []
 for p in p_range:
 	prob = str(int(100*p))
-	data.append(np.loadtxt("consumption_fraction-p"+prob+"-T"+str(Tab+T0)))
+	data.append(np.loadtxt("../../../data/part1/model1/consumption_fraction-p"+prob+"-T"+str(Tab)+"-T0"+str(T0)))
     #data.append(np.loadtxt("data/constant/cycles_"+str(tot_cycles)+"/consumption_fraction-p"+prob+"-T"+str(Tab+T0))
 
 
@@ -77,7 +77,6 @@ fig.legend(ax, labels=labels, bbox_to_anchor=[0.98, 0.7], borderaxespad=0.2)
 # fig.subplots_adjust(right=0.85)
 fig.show()
 if save_fig:
-	# fig.savefig("figs/constant/exp_num_com.png", dpi=100)
-	fig.savefig("test.png", dpi=100)	
+	fig.savefig("../../../figs/part1/model1/constant/exp_num_com.png", dpi=100)
 
 

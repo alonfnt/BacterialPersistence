@@ -14,12 +14,12 @@ plt.rcParams['font.size'] = 12
 ###########################
 ## Simulation parameters ##
 ###########################
-save_data = True
+save_data = False
 save_fig = True
 extinction = False
 
 tot_cycles = 20     # total number of cycles
-dlag = 0.1			# space between lag times
+dlag = 1			# space between lag times
 reps = 1            # repetitions for ensemble average
 
 
@@ -56,8 +56,8 @@ for rep in range(reps):
     comp_frac += s_c / reps
 
 if save_data:
-    np.savetxt("optimal_consumption_fraction-p"+prob+"-T"+str(Tab)+"-T0"+str(T0), optimal_comp_frac)
-    np.savetxt("consumption_fraction-p"+prob+"-T"+str(Tab)+"-T0"+str(T0), comp_frac)
+    np.savetxt("../../../data/part1/model1/optimal_consumption_fraction-p"+prob+"-T"+str(Tab)+"-T0"+str(T0), optimal_comp_frac)
+    np.savetxt("../../../data/part1/model1/consumption_fraction-p"+prob+"-T"+str(Tab)+"-T0"+str(T0), comp_frac)
 
 
 ax.set(xlabel=r"$\lambda$ [h]", ylabel="Consumption fraction")
@@ -69,5 +69,5 @@ fig.tight_layout()
 fig.show()
 
 if save_fig:
-        fig.savefig("consumption_fraction-p"+prob+"-T"+str(Tab)+"-T0"+str(T0)+".png")
+        fig.savefig("../../../data/part1/model1/consumption_fraction-p"+prob+"-T"+str(Tab)+"-T0"+str(T0)+".png")
 	
