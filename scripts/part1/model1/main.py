@@ -34,7 +34,7 @@ prob = str(int(100*p))
 ab_args = [p, T0, Tab]
 
 # array of lag times
-lag_arr = np.arange(0, T0 + Tab, dlag) + 10**(-4)
+lag_arr = np.arange(0, T0 + Tab, dlag) + lag_min
 
 
 ################
