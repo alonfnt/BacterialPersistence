@@ -15,7 +15,7 @@ model = 1                   # models: 1 (triggered), 2 (spontaneous, one lag tim
 mutation = True
 extinction = False
 mutation_seed = 'min'		# seeds: min , max, optimal parameters
-tot_cycles = 10_000 		# total number of cycles / lenght of evolution
+tot_cycles = 100 #10_000 		# total number of cycles / lenght of evolution
 
 data_path = "model_" + str(model) + "/case_" + case + "/data/seed_" + mut_seed
 

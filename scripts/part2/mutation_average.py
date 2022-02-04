@@ -7,9 +7,6 @@ font = {'family': 'Times New Roman',
         'size': 20}
 mpl.rc('font', **font)
 
-folder = "/home/silja/Documents/thesis/thesis_git/type_II/data/competition_plot/comp_"
-# folder = "/home/silja/Documents/thesis/thesis_git/type_II/data/single_opt/single_"
-
 
 T_labels = ['T0', 'Tab']
 path = folder
@@ -32,9 +29,6 @@ mut_seed = mut_seeds[0]
 case = cases[1]
 model = models[1]
 
-data_path = "model_" + str(model) + "/case_" + case + "/data/server/seed_" + mut_seed
-fig_path = "model_" + str(model) + "/case_" + case + "/figs/seed_" + mut_seed
-
 
 ####################
 ## Importing data ##
@@ -44,8 +38,8 @@ T = (T0 + Tab[0])
 lag_avrg, delta_avrg = [], []
 p_range = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
 for pi in p_range:
-    lag_avrg.append(np.loadtxt(data_path + "-average_lag-p" + str(pi) + "-T0" + str(int(T0)) + "-T" + str(int(T))))
-    delta_avrg.append(np.loadtxt(data_path + "-average_delta-p" + str(pi) + "-T0" + str(int(T0)) + "-T" + str(int(T))))
+    lag_avrg.append(np.loadtxt("../../figures/model"+"seed_" + mut_seed+"-average_lag-p" + str(pi) + "-T0" + str(int(T0)) + "-T" + str(int(T))))
+    delta_avrg.append(np.loadtxt("../../figures/model"+"seed_" + mut_seed+"-average_delta-p" + str(pi) + "-T0" + str(int(T0)) + "-T" + str(int(T))))
 
 lag_p = np.zeros_like(p_range)
 lag_std = np.zeros_like(p_range)
@@ -100,7 +94,7 @@ fig.tight_layout(rect=[0, 0, 1, 0.85])
 ax[1].legend(loc='upper center', bbox_to_anchor=(-0.18, 1.3), ncol=2, fancybox=True, shadow=False)
 fig.show()
 #
-fig.savefig("model_2/case_II/figs/average_p_ext.pdf")
+fig.savefig("../../figures/model_2/case_II/figs/average_p_ext.pdf")
 
 #fig1 = fig
 

@@ -2,9 +2,6 @@ import numpy as np
 from tqdm import tqdm
 from scipy.integrate import solve_ivp
 
-# to be edited
-path = "/home/silja/Documents/thesis/thesis_git/type_II/data/single_opt/"
-
 
 ##########################
 ## Intrinsic parameters ##
@@ -218,27 +215,27 @@ def initialise_system(ab_args, sim_args):
 	    
 	    # initialising simulation from combination of biggest parameters
 	    elif mut_seed == 'max':
-		initial_population[len(np.unique(lag)) - 1] = n0
+            initial_population[len(np.unique(lag)) - 1] = n0
 		
-	    # initialising simulation from combination of optimal parameters
-	    elif mut_seed == 'optimal:
-	    	# identifying optimal parameters from data
-		ab_res = len(np.loadtxt(path + "single_lag-Tab" + str(int(T))))
-		ip = int(p * ab_res)
-		it = int(T0 * ab_res / T0_max)
-		lag_opt = np.loadtxt(path + "single_lag-Tab" + str(int(T)))[ip, it]
-		delta_opt = np.loadtxt(path + "single_delta-Tab" + str(int(T)))[ip, it]
+	    # initialising simulation from combination of optimal parameters, 
+        # identifying optimal parameters from data
+	    elif mut_seed == 'optimal':
+            assert(mut_seed > 1)
+            ab_res = len(np.loadtxt("../../data/model2/low_resolution/optimal_lag-Tab" + str(int(T))))
+            ip = int(p * ab_res)
+            it = int(T0 * ab_res / T0_max)
+            lag_opt = np.loadtxt("../../data/model2/low_resolution/optimal_lag-Tab" + str(int(T)))[ip, it]
+            delta_opt = np.loadtxt("../../data/model2/low_resolution/optimal_delta-Tab" + str(int(T)))[ip, it]
+            
+            # corresponding position in parameter space
+            ilag = np.where(abs(lag - lag_opt) == min(abs(lag - lag_opt)))[0][0]
+            idelta = np.where(abs(delta - delta_opt) == min(abs(delta - delta_opt)))[0][0]
 
-		# corresponding position in parameter space
-		ilag = np.where(abs(lag - lag_opt) == min(abs(lag - lag_opt)))[0][0]
-		idelta = np.where(abs(delta - delta_opt) == min(abs(delta - delta_opt)))[0][0]
-
-		index = idelta + ilag
-
-		if model == 3:
-		    index += il * Nl * Nd
+            index = idelta + ilag            
+            if model == 3:
+                index += il * Nl * Nd
 		
-		initial_population[index] = n0
+            initial_population[index] = n0
 		    
 	    else:
 	    	print("Error: Don't recognize mutation seed.")
@@ -364,19 +361,19 @@ def savedata(ab_args, sim_args, save_data):
     
     if saving:
 	p = np.round(p, 2)
-	np.savetxt(data_path + "-average_lag-p" + str(p) + "-T0" + str(T0) + "-T" + str(T), data[0])
-	np.savetxt(data_path + "-dominant_lag-p" + str(p) + "-T0" + str(T0) + "-T" + str(T), lag_dom)
+	np.savetxt("../../data/model"+str(model)+"/-average_lag-p" + str(p) + "-T0" + str(T0) + "-T" + str(T), data[0])
+	np.savetxt("../../data/model"+str(model)+"/-dominant_lag-p" + str(p) + "-T0" + str(T0) + "-T" + str(T), lag_dom)
 
 	if model >= 2:
-	    np.savetxt(data_path + "-average_delta-p" + str(p) + "-T0" + str(T0) + "-T" + str(T), data[1])
-	    np.savetxt(data_path + "-dominant_delta-p" + str(p) + "-T0" + str(T0) + "-T" + str(T), delta_dom)
+	    np.savetxt("../../data/model"+str(model)+"/-average_delta-p" + str(p) + "-T0" + str(T0) + "-T" + str(T), data[1])
+	    np.savetxt("../../data/model"+str(model)+"/-dominant_delta-p" + str(p) + "-T0" + str(T0) + "-T" + str(T), delta_dom)
 
 	if model == 3:
-	    np.savetxt(data_path + "-average_omega-p" + str(p) + "-T0" + str(T0) + "-T" + str(T), data[2])
-	    np.savetxt(data_path + "-dominant_omega-p" + str(p) + "-T0" + str(T0) + "-T" + str(T), omega_dom)
+	    np.savetxt("../../data/model3/"+"-average_omega-p" + str(p) + "-T0" + str(T0) + "-T" + str(T), data[2])
+	    np.savetxt("../../data/model3/-dominant_omega-p" + str(p) + "-T0" + str(T0) + "-T" + str(T), omega_dom)
 
 
 	if extinction == True:
-	    np.savetxt(data_path + "-extinctions-p" + str(p) + "-T0" + str(T0) + "-T" + str(T), data[4])
+	    np.savetxt("../../data/model"+str(model)+"/-extinctions-p" + str(p) + "-T0" + str(T0) + "-T" + str(T), data[4])
 		    
 		  
