@@ -368,6 +368,9 @@ def savedata(ab_args, sim_args, data, saving):
 			path += "/mutation"
 			parameters += "-" + mutation_seed
 
+		if extinction:
+			path += "_extinction"
+
 		np.savetxt(path + "/average_lag-" + parameters, data[0])
 		# np.savetxt(path + "/dominant_lag-" + parameters, lag_dom)
 
@@ -376,8 +379,8 @@ def savedata(ab_args, sim_args, data, saving):
 			# np.savetxt(path + "/dominant_delta-" + parameters, delta_dom)
 
 		if model == 3:
-			np.savetxt(path + "average_omega-" + parameters, data[2])
-			# np.savetxt(path + "dominant_omega-" + parameters, omega_dom)
+			np.savetxt(path + "/average_omega-" + parameters, data[2])
+			# np.savetxt(path + "/dominant_omega-" + parameters, omega_dom)
 
 
 		if extinction == True:
