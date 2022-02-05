@@ -11,9 +11,26 @@ def main():
     for filename in os.listdir(folder+"rename/"):
         src = f"{filename}"  # foldername/filename, if .py file is outside folder
         print(src)
-        _, dst = src.split('-first')
-        dst = f"{dst}-min"
-        dst = f"{folder}/mutation/{dst}"
+
+        dst = src.split('0.')
+        dst = dst[0] + dst[1]
+        # dst = src.split('-T0')
+        # dst = dst[0] + "0-T0" + dst[1]
+
+        # if len(src.split('l-')) == 2:
+        #     _, dst = src.split('l-')
+        #     dst = f"{dst}-optimal"
+
+        # if len(src.split('t-')) == 2:
+        #     _, dst = src.split('t-')
+        #     dst = f"{dst}-min"
+        
+        # if len(src.split('x-')) == 2:
+        #     _, dst = src.split('x-')
+        #     dst = f"{dst}-max"
+
+        dst = f"{folder}/{dst}"
+
          
         # rename() function will
         # rename all the files
