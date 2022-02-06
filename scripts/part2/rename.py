@@ -7,7 +7,7 @@ import os
 # Function to rename multiple files
 def main():
    
-    folder = "../../data/model2/rename/"
+    folder = "../../data/model1/rename/"
     for filename in os.listdir(folder):
         src = f"{filename}"  # foldername/filename, if .py file is outside folder
         print(src)
