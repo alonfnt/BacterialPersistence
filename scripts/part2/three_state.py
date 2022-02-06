@@ -1,3 +1,5 @@
+# I don't remember exactly what this is, but think I used this in the end.
+
 import numpy as np
 import matplotlib.pyplot as plt
 import time
@@ -82,6 +84,7 @@ def solve_3state(n_t, r, bac_args, ab_args):
     t = np.concatenate(t)
 
     return t, dt, nt, pt
+
 
 def a_b(lag, delta):
     D = np.sqrt((lag * (1 - delta) - 1) ** 2 + 4 * lag)
