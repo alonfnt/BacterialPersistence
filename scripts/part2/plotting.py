@@ -12,7 +12,7 @@ cmap = mpl.cm.get_cmap('CMRmap')
 
 
 saving = True                       # saving figure
-model = 1                           # models: 1 (triggered), 2 (spontaneous, one lag time), 3 (spontaneous, two lag times)
+model = 2                           # models: 1 (triggered), 2 (spontaneous, one lag time), 3 (spontaneous, two lag times)
 mutation = True
 extinction = True
 mutation_seed = 'max'               # seeds: 'min' , 'max', 'optimal' parameters
@@ -37,7 +37,7 @@ data_path += (not mutation) * "/competition_all_species"
 
 fig_path = "../../figures/model" + str(model)
 time_parameters = "-T0" + str(T0) + "-T" + str(T) + mutation * ("-" + mutation_seed)
-mutation_parameters = mutation * ("mutation" + extinction * "_extinction")
+mutation_parameters = mutation * ("_mutation" + extinction * "_extinction")
 
 
 ####################
@@ -100,12 +100,13 @@ if model == 1:
 
 	fig.show()
 	if saving:
-		fig.savefig(fig_path + "/evolution_average_" + mutation_parameters + time_parameters)
+		fig.savefig(fig_path + "/evolution_average" + mutation_parameters + time_parameters)
 
 
 elif model == 2:
     # plotting average lag and delta
-    fig, ax = plt.subplots(1, 2, figsize=(12, 5))
+    fig, ax = plt.subplots(1, 2, figsize=(12, 6))
+    fig.suptitle(title)
     ax[0].set(xlabel='Cycle number', ylabel=r'$\langle\lambda\rangle$ [h]') #, title=title)
     ax[1].set(xlabel='Cycle number', ylabel=r'$\langle\delta\rangle$ [1/h]') #, title=title)
 
@@ -117,32 +118,32 @@ elif model == 2:
         i += 1
 
     ax[0].set(yscale='log', ylim=(0.009, 20))
-    ax[1].set(yscale='log', ylim=(0,0.1))
-    fig.tight_layout(rect=[0, 0, 1, 0.85])
-    ax[1].legend(loc='upper center', bbox_to_anchor=(-0.15, 1.38),
-          ncol=5, fancybox=True, shadow=False)
+    ax[1].set(yscale='log', ylim=(0,0.5))
+    fig.tight_layout(rect=[0, 0, 1, 0.9])
+    ax[1].legend(loc='upper center', bbox_to_anchor=(-0.15, 1.32),
+          ncol=3, fancybox=True, shadow=False)
     fig.show()
-    if save_fig:
-        fig.savefig(fig_path + "-averages-T0" + str(int(T0)) + "-T" + str(int(T)))
+    if saving:
+        fig.savefig(fig_path + "/evolution_average" + mutation_parameters + time_parameters)
 
     # plotting dominant lag and delta
-    fig, ax = plt.subplots(1, 2, figsize=(12, 4))
-    ax[0].set(xlabel='Cycle number', ylabel='Dominant lag time [h]', title=title)
-    ax[1].set(xlabel='Cycle number', ylabel='Dominant delta time [h]', title=title)
+    # fig, ax = plt.subplots(1, 2, figsize=(12, 4))
+    # ax[0].set(xlabel='Cycle number', ylabel='Dominant lag time [h]', title=title)
+    # ax[1].set(xlabel='Cycle number', ylabel='Dominant delta time [h]', title=title)
 
-    i = 0
-    for pi in p_arr:
-        ax[0].plot(cycles, lag_dom[i], color=colors[i], label="p = "+str(pi))
-        ax[1].plot(cycles, delta_dom[i], color=colors[i], label="p = "+str(pi))
-        i += 1
+    # i = 0
+    # for pi in p_arr:
+    #     ax[0].plot(cycles, lag_dom[i], color=colors[i], label="p = "+str(pi))
+    #     ax[1].plot(cycles, delta_dom[i], color=colors[i], label="p = "+str(pi))
+    #     i += 1
 
-    ax[0].set(yscale='log', ylim=(0.009, 10))
-    ax[1].set(yscale='linear')
-    ax[0].legend()
-    fig.tight_layout()
-    # fig.show()
-    if saving:
-        fig.savefig(fig_path + "/evolution_average_" + mutation_parameters + time_parameters)
+    # ax[0].set(yscale='log', ylim=(0.009, 10))
+    # ax[1].set(yscale='linear')
+    # ax[0].legend()
+    # fig.tight_layout()
+    # # fig.show()
+    # if saving:
+    #     fig.savefig(fig_path + "/evolution_average_" + mutation_parameters + time_parameters)
 
 
 
@@ -171,7 +172,7 @@ elif model == 3:
     ax[1].legend(loc='upper center', bbox_to_anchor=(0.5, 1.5),
                  ncol=5, fancybox=True, shadow=False)
     fig.show()
-    if save_fig:
+    if saving:
         fig.savefig(fig_path + "-averages-T0" + str(int(T0)) + "-T" + str(int(T)))
 
     # plotting dominant lag and delta
@@ -193,7 +194,7 @@ elif model == 3:
     fig.tight_layout()
     fig.show()
     if saving:
-        fig.savefig(fig_path + "/evolution_average_" + mutation_parameters + time_parameters)
+        fig.savefig(fig_path + "/evolution_average" + mutation_parameters + time_parameters)
 
 
 
