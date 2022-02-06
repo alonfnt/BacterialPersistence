@@ -365,11 +365,11 @@ def savedata(ab_args, sim_args, data, saving):
 		parameters = "p" + str(int(p*100)) + "-T0" + str(T0) + "-T" + str(T)
 
 		if mutation:
-			path += "/mutation"
+			path += "/mutation" + extinction * "_extinction" + "/mutation_rate-"+'{:.0e}'.format(float(mutation_rate))
 			parameters += "-" + mutation_seed
 
-		if extinction:
-			path += "_extinction"
+		else:
+			path += "/competition_all_species"
 
 		np.savetxt(path + "/average_lag-" + parameters, data[0])
 		# np.savetxt(path + "/dominant_lag-" + parameters, lag_dom)
