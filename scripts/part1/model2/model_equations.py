@@ -1,3 +1,4 @@
+# Coupled ODEs that make up the model
 import numpy as np
 
 ##########################

@@ -1,3 +1,5 @@
+# Two functions for plotting data
+
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -161,6 +163,7 @@ def plot_single_sample(bac_args, ab_args, sim_args, r_arr, winner=True, compare=
 
 
 
+# plotting extinction frequency from competition data
 def extinction_frequency(ab_args, indices, save_fig=False):
     cmap = mpl.cm.get_cmap('cividis')
     # importing data

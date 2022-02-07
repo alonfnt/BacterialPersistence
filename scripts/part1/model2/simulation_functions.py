@@ -1,3 +1,4 @@
+# Functions for computing optimal parameters from functions in model_equations.py
 import numpy as np
 import psutil
 from multiprocessing.pool import Pool
@@ -46,7 +47,7 @@ def analytical_fitness(bac_args, ab_args):
     return 1 / Ts_avrg
 
 
-# optimal parameters for all antibiotic variables
+# computing optimal parameters for all combinations of antibiotic parameters
 def compute_optimal_parameters(bac_args, ab_args):
     lag, delta = bac_args[0:2]
     p, T0, Tab = ab_args

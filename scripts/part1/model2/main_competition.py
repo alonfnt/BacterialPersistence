@@ -1,3 +1,5 @@
+# Computing consumption fractions from competition between species with optimal parameters from 'main_single_species.py'
+# data and competitor
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt

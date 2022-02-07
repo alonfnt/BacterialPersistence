@@ -1,3 +1,5 @@
+# Plotting lineplots from data
+# Needs cleaning
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt

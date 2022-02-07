@@ -1,3 +1,4 @@
+# computing optimal parameter of single species with restricted nutrients
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
