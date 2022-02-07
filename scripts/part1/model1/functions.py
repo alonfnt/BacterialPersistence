@@ -1,3 +1,4 @@
+# Functions for computing optimal parameters from functions in model_equations.py
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -82,7 +83,7 @@ famine.terminal = True
 famine.direction = -1
 
 
-# performing one feast-famine cycle
+# solving one feast-famine cycle
 def solve_cycle(n_t, r, lag, ab_args, res):
     p, T0, Tab = ab_args
     dt_max = 1

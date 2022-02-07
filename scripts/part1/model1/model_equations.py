@@ -1,12 +1,13 @@
+# Coupled ODEs that make up the model
 import numpy as np
 
 ##########################
 ## Intrinsic parameters ##
 ##########################
-K = 10**9          	# carrying capacity
-beta_max = 1        	# max growth rate
-gamma = 1           	# kill rate
-lag_min = 0.01          # lower limit on lag time
+K = 10**9				# carrying capacity
+beta_max = 1			# max growth rate
+gamma = 1 				# kill rate
+lag_min = 0.01			# lower limit on lag time
 
 
 #########################
@@ -29,7 +30,7 @@ def beta(s):
     # return beta_max * (s / (s + K))		# Monod
 
 
-# Computing derivatives of couple ODE
+# Computing derivatives in absence of antibiotics
 def growth(t, n, lag):
     n[:-1][n[:-1] < 0] = 10**(-200)     		# avoid negative populations
 
@@ -46,6 +47,7 @@ def growth(t, n, lag):
     return dn_dt
 
 
+# Computing derivatives in presence of antibiotics
 def decay(t, n, lag):
     n[:-1][n[:-1] < 0] = 10**(-200)     		# avoid negative populations
 

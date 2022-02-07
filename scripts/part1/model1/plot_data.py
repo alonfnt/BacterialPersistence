@@ -1,3 +1,7 @@
+# Comparing fitness of analytically predicted optimal species and competitor
+# In upper plot: analytical fitness
+# In lower plot: numerical consumption fraction
+
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -18,9 +22,9 @@ save_fig = True
 tot_cycles = 20_000
 data = []
 for p in p_range:
-    prob = str(int(100*p))
-    # data.append(np.loadtxt("../../../data/model1/consumption_fraction-p"+prob+"-T"+str(Tab)+"-T0"+str(T0)))
-    data.append(np.loadtxt("../../../data/model1/cycles_"+str(tot_cycles)+"/consumption_fraction-p"+prob+"-T"+str(Tab)+"-T0"+str(T0)))
+    parameters = "-p"+str(int(100*p)) +"-T"+str(Tab)+"-T0"+str(T0)
+    # data.append(np.loadtxt("../../../data/model1/consumption_fraction"+parameters))
+    data.append(np.loadtxt("../../../data/model1/cycles_"+str(tot_cycles)+"/consumption_fraction"+parameters))
 
 
 # setting plotting parameters

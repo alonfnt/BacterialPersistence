@@ -1,4 +1,6 @@
-# importing libraries
+# Computing consumption fractions from competition between analytically predicted optimal parameters and competitor
+# with range of different lag times.
+
 import numpy as np
 import matplotlib.pyplot as plt
 import time
