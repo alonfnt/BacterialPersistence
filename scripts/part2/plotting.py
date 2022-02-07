@@ -12,10 +12,10 @@ cmap = mpl.cm.get_cmap('CMRmap')
 
 
 saving = True                       # saving figure
-model = 2                           # models: 1 (triggered), 2 (spontaneous, one lag time), 3 (spontaneous, two lag times)
+model = 3                           # models: 1 (triggered), 2 (spontaneous, one lag time), 3 (spontaneous, two lag times)
 mutation = True
 extinction = True
-mutation_seed = 'max'               # seeds: 'min' , 'max', 'optimal' parameters
+mutation_seed = 'min'               # seeds: 'min' , 'max', 'optimal' parameters
 mutation_rate = 0.001
 
 
@@ -25,7 +25,7 @@ mutation_rate = 0.001
 T0 = 0                              # application time
 Tab = 6                             # duration
 T = T0 + Tab                        # removal time
-p_arr = [0.1, 0.2, 0.3, 0.5, 0.7, 0.9]   # probabilities
+p_arr = [0.1, 0.9]   # probabilities
 
 
 ####################
