@@ -1,3 +1,4 @@
+# Computing average parameters when evolving several species
 import numpy as np
 import matplotlib.pyplot as plt
 import time

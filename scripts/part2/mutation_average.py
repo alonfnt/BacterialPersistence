@@ -1,3 +1,5 @@
+# plotting long term average from population average from 'main.py'
+# to be cleaned
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt

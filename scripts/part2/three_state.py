@@ -1,4 +1,4 @@
-# I don't remember exactly what this is, but think I used this in the end.
+# I don't remember exactly what this is, but I don't think I used this in the end.
 
 import numpy as np
 import matplotlib.pyplot as plt
