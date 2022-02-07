@@ -1,3 +1,5 @@
+*NB: needs python 3 to run (I think)*
+
 # BacterialPersistence
 
 **Model 1:** only triggered persistence
