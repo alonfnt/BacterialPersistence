@@ -10,6 +10,6 @@
 
 ---
 ### In *scripts*
-**Part 1:** computing optimal persistence parameters with one or no competitors. Either as long term average or ensemble average.
+**Part 1:** computing optimal persistence parameters with one or no competitors. Either as long term average or ensemble average. (First part of thesis)
 
-**Part 2:** computing average persistence parameters when allowing mutation, or competition between all species.
+**Part 2:** computing long time average persistence parameters from when allowing mutation, or competition between all species. (Second part of thesis)
