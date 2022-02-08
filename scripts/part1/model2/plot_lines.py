@@ -99,3 +99,4 @@ ax[0].set(xscale="linear")
 fig.show()
 if saving:
 	fig.savefig("../../../figures/model2/optimal_lines_" + x_var + "-" + time + ".png", dpi=100)
+	# fig.savefig("../../../figures/model2/optimal_competitor_lines_" + x_var + "-" + time + ".png", dpi=100)
