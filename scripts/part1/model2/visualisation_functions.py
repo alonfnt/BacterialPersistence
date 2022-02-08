@@ -172,16 +172,15 @@ def extinction_frequency(ab_args, indices, save_fig=False):
     p = np.round(p, 1)
     Tab = np.round(Tab, 0)
     ab_label = [str(np.round(ab_arg, 1)) for ab_arg in ab_args[0:3]]
-    if severity == 'all':
-        lag_opt = np.loadtxt('data/single_plot2/single_lag-T0' + str(T0))
-        del_opt = np.loadtxt('data/single_plot2/single_delta-T0' + str(T0))
-        w_params = '(' + str(np.round(lag_opt[ip+1, it], 2)) + ', ' + str(np.round(del_opt[ip+1, it], 2)) + ')'
-        # w_params = '(' + str(int(p * (T0 + Tab))) + ', 0)'
-
-    p_ext_winner = np.loadtxt("../../../data/model2/optimal_extinction_prob-p" + str(p) + "-T0" + str(np.round(T0,0)) + "-Tab" + str(Tab))
-    p_ext_competitor = np.loadtxt("../../../data/model2/competitor_extinction_prob-p" + str(p) + "-T0" + str(np.round(T0,0)) + "-Tab" + str(Tab))
-    lag_opt = np.loadtxt('../../../data/model2/comp_lag-T0'+str(T0))
-    del_opt = np.loadtxt('../../../data/model2/comp_delta-T0'+str(T0))
+    lag_opt = np.loadtxt('../../../data/model2/low_resolution/optimal_lag-T0' + str(T0))
+    del_opt = np.loadtxt('../../../data/model2/low_resolution/optimal_delta-T0' + str(T0))
+    w_params = '(' + str(np.round(lag_opt[ip+1, it], 2)) + ', ' + str(np.round(del_opt[ip+1, it], 2)) + ')'
+    
+    parameters = "p" + str(int(10*p)*10) + "-T0" + str(int(T0)) + "-Tab" + str(int(Tab))
+    p_ext_winner = np.loadtxt("../../../data/model2/competition_two_species/extinction_frequency/optimal_extinction_prob-" + parameters)
+    p_ext_competitor = np.loadtxt("../../../data/model2/competition_two_species/extinction_frequency/competitor_extinction_prob-" + parameters)
+    lag_opt = np.loadtxt('../../../data/model2/competition_two_species/competition_lag-T0'+str(T0))
+    del_opt = np.loadtxt('../../../data/model2/competition_two_species/competition_delta-T0'+str(T0))
     optimal_comp = '(' + str(np.round(lag_opt[ip, it], 2)) + ', ' + str(np.round(del_opt[ip, it], 2)) + ')'
     # optimal_comp = '(?, ?)'
 
@@ -203,7 +202,7 @@ def extinction_frequency(ab_args, indices, save_fig=False):
     fig.colorbar(im, ax=ax[0:2])
     fig.show()
     if save_fig:
-        fig.savefig("../../../figuers/model2/extinction_frequency_p" + ab_label[0] + "_T0" + ab_label[1] + "_T" + ab_label[2] + ".png", dpi=100)
+        fig.savefig("../../../figures/model2/extinction_frequency_p" + ab_label[0] + "_T0" + ab_label[1] + "_T" + ab_label[2] + ".png", dpi=100)
 
     fig, ax = plt.subplots(1, 2, figsize=(12, 5), sharey=True)
     # ax[0].plot(np.linspace(0, T0 + 12, 100), p_ext_winner[0], '.-', label=r'winner, $\delta$ = ' + str(0.1*0))

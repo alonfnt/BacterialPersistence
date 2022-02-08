@@ -1,4 +1,4 @@
-# plotting long term average from population average from 'main.py'
+# plotting long term average from population average from 'main.py' as function of p
 import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt

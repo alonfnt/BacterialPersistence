@@ -17,6 +17,8 @@ mpl.rc('font', **font)
 
 lag_cmap = mpl.cm.get_cmap('viridis')
 del_cmap = mpl.cm.get_cmap('plasma')
+constant_index = {'T0':0, 'Tab':1}
+
 
 
 ###########################
@@ -29,7 +31,7 @@ tot_cycles = 20
 repetitions = 1                             # number of repetitions for ensemble average
 
 data = 'old'                                # 'new' - generate and plot new data. 'old' plot old data
-save_fig = True
+save_fig = False
 save_data = False
 
 
@@ -38,7 +40,7 @@ save_data = False
 ## Antibiotic parameters ##
 ###########################
 # for chosing which time parameter to keep constant.
-ic = 1                                          # ic = 0 corresponds to constant T0, ic = 1 corresponds to constant Tab
+ic = constant_index['Tab']                      # 'T0' or 'Tab'
 T_const = 8                                     # value of the constant parameter
 
 # defining parameter arrays

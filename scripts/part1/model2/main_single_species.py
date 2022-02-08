@@ -14,15 +14,15 @@ mpl.rc('font', **font)
 
 lag_cmap = mpl.cm.get_cmap('viridis')
 del_cmap = mpl.cm.get_cmap('plasma')
-
+constant_index = {'T0':0, 'Tab':1}
 
 ###########################
 ## Simulation parameters ##
 ###########################
-save_fig = False
+save_fig = True
 save_data = False
-data = 'new'                                    # 'new' - generate and plot new data. 'old' plot old data
-resolution = 'low'                              # resolution of antibiotic parameters. 'low' or 'high'
+data = 'old'                                    # 'new' - generate and plot new data. 'old' plot old data
+resolution = 'high'                              # resolution of antibiotic parameters. 'low' or 'high'
 
 if resolution == 'low': ab_res = 101               # for generating data used in competition simulations
 elif resolution == 'high': ab_res = 400            # for creating high resolution plots
@@ -34,8 +34,8 @@ bac_res = 400                                   # resolution in bacterial parame
 ## Antibiotic parameters ##
 ###########################
 # for chosing which time parameter to keep constant.
-ic = 1                                          # ic = 0 corresponds to constant T0, ic = 1 corresponds to constant Tab
-T_const = 5                                     # value of the constant parameter
+ic = constant_index['Tab']                      # 'T0' or 'Tab'
+T_const = 10                                    # value of the constant parameter
 
 # defining parameter arrays
 T_max = [12, 24]                                # upper bounds on meningful values for T0 and Tab
@@ -86,9 +86,9 @@ if data == 'new':
 ###################
 # importing data 
 if data == 'old':
-    lag_opt = np.loadtxt('../../../data/model2/"+resolution+"_resolution/optimal_lag-' + T_labels[ic]+str(T_const))
-    del_opt = np.loadtxt('../../../data/model2/"+resolution+"_resolution/optimal_delta-' + T_labels[ic]+str(T_const))
-    fitness = np.loadtxt('../../../data/model2/"+resolution+"_resolution/optimal_fitness-' + T_labels[ic]+str(T_const))
+    lag_opt = np.loadtxt('../../../data/model2/'+resolution+'_resolution/optimal_lag-' + T_labels[ic]+str(T_const))
+    del_opt = np.loadtxt('../../../data/model2/'+resolution+'_resolution/optimal_delta-' + T_labels[ic]+str(T_const))
+    fitness = np.loadtxt('../../../data/model2/'+resolution+'_resolution/optimal_fitness-' + T_labels[ic]+str(T_const))
 
 # arrays for scaling imshow
 T = np.outer(np.ones_like(Tab), Tab) + np.outer(np.ones_like(T0), T0)
